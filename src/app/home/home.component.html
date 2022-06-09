@@ -1,0 +1,21 @@
+{{daynight()}}
+<nav class="{{color}}" >
+
+  <div class="container-fluid" >
+    <a class="navbar-brand" style="float: left;">
+      <img src="https://media.istockphoto.com/vectors/gym-or-fitness-logo-vector-id1186072552" alt="" width="50" height="50" class="d-inline-block">
+    Fitness Calculator
+  </a>
+      <span  style="color:white; float: right;">
+        {{date | date:'fullDate'}}
+      </span>    
+  </div>
+</nav>
+
+   <mat-tab-group  >
+  <mat-tab label="Home"> <app-fitness></app-fitness>  </mat-tab>
+  <mat-tab label="Write a Review"> <app-review></app-review> </mat-tab>
+  <mat-tab label="About Me"> <app-aboutme></app-aboutme> </mat-tab>
+</mat-tab-group>
+ 
+

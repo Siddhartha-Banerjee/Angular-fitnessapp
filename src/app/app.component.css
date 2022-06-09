@@ -1,0 +1,14 @@
+.mat-tab-label {
+    min-width: 40px !important;
+    padding: 5px;
+    background-color: transparent;
+    color: black;
+    font-weight: 700;
+}
+.mat-tab-label.mat-tab-label-active {
+    min-width: 100px !important;
+    padding: 5px;
+    background-color: lightgrey;
+    color: black;
+    font-weight: 700;
+}

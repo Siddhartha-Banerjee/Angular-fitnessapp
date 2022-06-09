@@ -1,0 +1,178 @@
+
+<mat-progress-bar mode="determinate" value="{{pbar}}"></mat-progress-bar>
+
+
+<div class="jumbotron">
+<form #basicform="ngForm" (ngSubmit)="getuser(basicform.value)" >
+
+
+
+<div class="mx-auto" style="width: 70%;">
+  <div class="input-group mb-3">
+
+ <ng-template #weval>
+    <span matBadge="!" matBadgeSize="large" matBadgeColor="accent" matBadgePosition="before" matBadgeOverlap="false">
+   </span>
+   {{pb(0)}} 
+</ng-template>
+
+  <span class="input-group-text" style="color:blue;" >Weight</span>
+<input type="number" ngModel class="form-control" placeholder="Enter your Weight in Kg"  aria-describedby="basic-addon1"  (blur)="pb(20)"  required  max="200" min="15" pattern="^[0-9.0-9]+$" #weight="ngModel" name="we">
+  
+  <div  *ngIf="!weight?.valid && ( weight?.touched) then weval" ></div>
+
+  </div>
+
+</div>
+    
+
+
+
+
+<br>
+<div class="mx-auto" style="width: 70%;">
+  <div class="input-group mb-3">
+
+    <ng-template #heival>
+    <span matBadge="!" matBadgeSize="large" matBadgeColor="accent" matBadgePosition="before" matBadgeOverlap="false">
+   </span>
+   {{pb(20)}} 
+</ng-template>
+
+  <span class="input-group-text" style="color:blue;" >Height</span>
+  <input type="number" ngModel class="form-control" placeholder="Enter your Height in feet"  aria-describedby="basic-addon1"  (blur)="pb(40)"  required max="10" min="2" pattern="^[0-9.0-9]+$" #height="ngModel" name="he" [disabled]="!weight.valid">
+
+
+  <div  *ngIf="!height?.valid && ( height?.touched) then heival" ></div>
+
+  </div>
+
+</div>
+    
+
+  <br>
+
+
+<div class="mx-auto" style="width: 32%;">
+  <div class="input-group mb-3">
+
+<ng-template #ageval>
+    <span matBadge="!" matBadgeSize="large" matBadgeColor="accent" matBadgePosition="before" matBadgeOverlap="false">
+   </span>
+   {{pb(40)}} 
+</ng-template>
+
+  <span class="input-group-text" style="color:blue;" >Age</span>
+  <input type="number" ngModel class="form-control" placeholder="Enter Age"  aria-describedby="basic-addon1"   required max="150" pattern="^[0-9.0-9]+$" #age="ngModel" name="ag" [disabled]="!(height.valid && weight.valid)" (keyup)="pb(60)">
+
+<div  *ngIf="!age?.valid && ( age?.touched) then ageval" > </div>
+
+  </div>
+</div>
+<br>
+
+
+
+<div class="mx-auto" style="text-align: center; width: 30%; border: solid; border-color: blue; padding: 1%">
+  <span class="input-group-text" style="color:blue;" >Gender</span>
+  <mat-radio-group aria-label="Select an option" >
+  <mat-radio-button color="primary" [disabled]="!(height.valid && weight.valid && age.valid)" [value]="'m'" (change)="selection = $event.value" (change)="pb(80)" >Male</mat-radio-button><br>
+  <mat-radio-button [disabled]="!(height.valid && weight.valid && age.valid)" [value]="'f'" (change)="selection = $event.value" (change)="pb(80)">Female</mat-radio-button>
+  </mat-radio-group>
+</div>
+<br>
+
+<div class="mx-auto" style="text-align: center; width: 68%; border: solid; border-color: blue; padding: 1%">
+<h4 class="input-group-text" style="color:blue;">Physical Activity</h4>
+<mat-form-field appearance="fill" >
+  <mat-label>Choose an option</mat-label>
+  <mat-select (valueChange)="al($event)" (valueChange)="pb(100)" [disabled]="!(height.valid && weight.valid && age.valid && selection)">
+ <mat-option *ngFor="let catalog of catalogTitles" [value]="catalog">{{catalog.title}}</mat-option>
+</mat-select>
+</mat-form-field>
+</div>
+
+
+
+<br>
+<div style=" text-align: center;">
+  
+    <button mat-raised-button color="primary"(click)="triggerModal(modalData)" [disabled]="(!(basicform.valid && selection))||(aclv==0)">
+    Show Result
+     </button>
+  
+</div>
+<br><br>
+</form>
+
+
+
+
+
+<ng-template #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Your Result</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    
+
+
+<h5 *ngIf="iw>=0; then iwv else slang"></h5>
+<ng-template #iwv>
+<div *ngIf="cata!='Normal'">
+  <h4 style="color: red; text-align: center;">Ideal Weight according to height is:</h4>
+  <h5 style="color: blue; text-align: center;">{{iw | number:'2.2-2'}} kg</h5>
+
+  <h4 style="color: red; text-align: center;">Your BMI is:</h4>
+  <h5 style="color: blue; text-align: center;">{{bmi | number:'2.2-2'}}</h5>
+  <h5 style="color: blue; text-align: center;">(18.5 <= Normal <= 24.5)</h5>
+
+   <h5 style="color: red;padding: 4%; text-align: center; background-color: black; border: solid;border-color: red;">You are {{cata}} by {{w | number:'2.2-2'}} kg</h5>
+
+   <h4 style="color: red; text-align: center;">Your Maintanance Calorie is:</h4>
+  <h5 style="color: blue; text-align: center;">{{bmr*1.85 | number:'2.2-2'}}</h5><br>
+  <h4 style="color: red; text-align: center; border-top:solid; border-bottom:solid;" *ngIf="bmi<18.5"><b> Eat More & Burn Less !! <br> Eat more than your Maintanance Calorie</b></h4>
+  <h4 style="color: red; text-align: center; border-top:solid; border-bottom:solid;" *ngIf="bmi>24.5"><b> Burn More & Eat Less !! <br> Eat lesser than your Maintanance Calorie</b></h4>
+
+ </div>
+ <div *ngIf="cata=='Normal'">
+
+  <h5 style="color: blue;padding: 4%; text-align: center; background-color: lightgreen; border: solid;border-color: green;"> You belongs to the Ideal weight Catagory <br> ({{18.5*(h/100)*(h/100) | number:'2.2-2'}} <= {{weight.value}} <= {{24.5*(h/100)*(h/100) | number:'2.2-2'}})</h5>
+  <br>
+
+   <h5 style="color: blue;padding: 4%; text-align: center; background-color: lightgreen; border: solid;border-color: green;">Your BMI is {{bmi | number:'2.2-2'}} <br>(18.5 <= {{bmi | number:'2.2-2'}}  <= 24.5)</h5><br> 
+
+    <h5 style="color: blue;padding: 4%; text-align: center; background-color: lightgreen; border: solid;border-color: green;">Your Maintanance Calorie is {{bmr*aclv | number:'2.2-2'}}</h5>
+
+ </div>
+</ng-template>
+<ng-template #slang>
+  <h4 style="color: red; text-align: center;">Chal Hutt Bhosdike!!</h4>
+
+  </ng-template>
+<br>
+
+  <div style="padding: .5%;text-align: left; display: inline;">
+
+<span style="float: left">
+  <a href="https://drive.google.com/file/d/1OPn8g_c4j9w6WSXXPRgELz2wX3_i4N_w/view?usp=sharing" 
+  download="dietchart.pdf">
+  <button type="button" class="btn btn-secondary">Download diet chart</button>
+</a>
+</span>
+<span style="float: right;" >
+
+<button type="button" class="btn btn-primary" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">ok</span>
+    </button>
+</span>
+  </div>
+</div>
+</ng-template>
+
+
+</div>
+<h5 style="text-align: right;">-Siddhartha Banerjee</h5>

@@ -1,0 +1,8 @@
+<div style="text-align: center;text-shadow: red 0.5px 0 3px;padding: 4%"><h2><u> Reviews by Users</u></h2></div>
+<div style="text-align: center;text-shadow: green 0.5px 0 3px;">
+
+	<div *ngFor="let item of apidata">
+		<h3 style="color: blue">{{item.name}} </h3><h4 style="color: red"> {{item.review}}</h4><br>
+	</div>
+
+</div>

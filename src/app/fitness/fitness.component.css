@@ -1,0 +1,57 @@
+.mt-0 {
+  margin-top: 0 !important;
+}
+
+.ml-1 {
+  margin-left: ($spacer * .25) !important;
+}
+
+.px-2 {
+  padding-left: ($spacer * .5) !important;
+  padding-right: ($spacer * .5) !important;
+}
+
+.p-3 {
+  padding: $spacer !important;
+}
+
+.one {
+  border-style: solid;
+  border-color: red ;
+}
+
+span.solid {border-style: solid;}
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color:blue;
+}
+
+
+html
+{
+	scroll-behavior: smooth;
+}
+
+.error-message {
+  color: red;
+  display: inline-block;
+  font-size: 12px;
+  border: solid;
+  
+}
+
+
+
+.btn2 {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: .5% 1%;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+/* Darker background on mouse-over */
+.btn2 :hover {
+  background-color: RoyalBlue;
+}

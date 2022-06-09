@@ -1,0 +1,23 @@
+<div style="text-align: center;">
+
+<div *ngIf="rvs==0; then thenblock else elseblock"></div>
+<ng-template #thenblock>
+<h3 style="text-shadow: blue 1px 0 2px"><br><u>Enter Your Review</u></h3>
+<div class="jumbotron">
+	<form #reviewform="ngForm">
+		<input type="text" ngModel name="name" placeholder="Enter your name"><br><br>
+		<textarea name="review" ngModel placeholder="Enter your review"></textarea><br><br>
+		<button mat-raised-button color="primary" (click)="submitted()" (click)="getreview(reviewform.value)">Submit</button>
+	</form>
+</div>
+</ng-template>
+<ng-template #elseblock>
+<span style="text-shadow: blue 1px 0 1px" >
+	<h3 style="padding-top: 12%"><i>Review Submitted !!!</i></h3>
+	<h4><i>Thank You !!</i></h4>
+	<h5><i>-Siddhartha Banerjee</i></h5>
+</span>
+</ng-template>
+
+
+</div>
